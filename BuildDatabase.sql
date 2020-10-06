@@ -40,3 +40,25 @@ CREATE TABLE COURSE (   id              INTEGER         NOT NULL,
 
                         FOREIGN KEY (category) REFERENCES CATEGORY (name),
                         PRIMARY KEY (id) );
+
+
+-- User table
+CREATE TABLE USER   (   id              INTEGER         NOT NULL,
+                        mail            VARCHAR(255)    UNIQUE NOT NULL,
+                        name            VARCHAR(255)    NOT NULL,
+                        password        VARCHAR(30)     NOT NULL,
+                        age             TINYINT         NOT NULL,
+                        studyLevel      VARCHAR(10)     NOT NULL,
+                        description     MEDIUMTEXT,
+                        image           VARCHAR(1024),
+
+
+                        CONSTRAINT validStudyLevel  CHECK ( studyLevel = 'elementary' OR
+                                                            studyLevel = 'middle' OR
+                                                            studyLevel = 'high' OR
+                                                            studyLevel = 'bachelor' OR
+                                                            studyLevel = 'master' OR
+                                                            studyLevel = 'phd' ),
+
+                        CONSTRAINT validUserAge     CHECK ( age > 0 AND age < 100 ),
+                        PRIMARY KEY (id) );

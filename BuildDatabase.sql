@@ -64,11 +64,11 @@ CREATE TABLE USER   (   id              INTEGER         NOT NULL,
                         PRIMARY KEY (id) );
 
 -- File_resource table
-CREATE TABLE FILE_RESOURCE (    name            VARCHAR(767)    NOT NULL,
+CREATE TABLE FILE_RESOURCE (    name            VARCHAR(766)    NOT NULL,
                                 course          INTEGER         NOT NULL,
                                 title           VARCHAR(255)    NOT NULL,
                                 format          VARCHAR(30)     NOT NULL DEFAULT "file",
-                                location        TINYINT         NOT NULL,
+                                inPageLocation  TINYINT         NOT NULL,
                                 description     MEDIUMTEXT,
 
                         CONSTRAINT validFormat  CHECK ( format = 'pdf' OR
@@ -76,7 +76,105 @@ CREATE TABLE FILE_RESOURCE (    name            VARCHAR(767)    NOT NULL,
                                                         format = 'youtube' OR
                                                         format = 'link' OR
                                                         format = 'image' OR
+                                                        format = 'txt' OR
                                                         format = 'file' ),
 
                         FOREIGN KEY (course) REFERENCES COURSE (id),
                         PRIMARY KEY (name, course) );
+
+-- Intermediate table between file_resource and user table
+CREATE TABLE HAS_ACCESSED ( resourceName    VARCHAR(766)    NOT NULL,
+                            course          INTEGER         NOT NULL,
+                            user            INTEGER         NOT NULL,
+
+                            FOREIGN KEY (resourceName) REFERENCES FILE_RESOURCE (name),
+                            FOREIGN KEY (course) REFERENCES COURSE (id),
+                            FOREIGN KEY (user) REFERENCES USER (id),
+                            PRIMARY KEY (resourceName, course, user) );
+
+-- Intermediate table between course and user table with suscribing relation
+CREATE TABLE SUSCRIBES (user    INTEGER NOT NULL,
+                        course  INTEGER NOT NULL,
+
+                        FOREIGN KEY (user) REFERENCES USER (id),
+                        FOREIGN KEY (course) REFERENCES COURSE (id),
+                        PRIMARY KEY (user,course) );
+
+-- Intermediate table between course and user table with teaching relation
+CREATE TABLE TEACHES (  user    INTEGER NOT NULL,
+                        course  INTEGER NOT NULL,
+
+                        FOREIGN KEY (user) REFERENCES USER (id),
+                        FOREIGN KEY (course) REFERENCES COURSE (id),
+                        PRIMARY KEY (user,course) );
+
+-- Intermediate table between course and user table with user banning relation
+CREATE TABLE IS_BANNED (user    INTEGER NOT NULL,
+                        course  INTEGER NOT NULL,
+
+                        FOREIGN KEY (user) REFERENCES USER (id),
+                        FOREIGN KEY (course) REFERENCES COURSE (id),
+                        PRIMARY KEY (user,course) );
+
+-- Intermediate table between course and user table with completing relation
+CREATE TABLE COMPLETES (user    INTEGER NOT NULL,
+                        course  INTEGER NOT NULL,
+                        date    DATE NOT NULL,
+
+                        FOREIGN KEY (user) REFERENCES USER (id),
+                        FOREIGN KEY (course) REFERENCES COURSE (id),
+                        PRIMARY KEY (user,course) );
+
+-- Intermediate table between course and user table with reviewing relation
+CREATE TABLE REVIEWS (  author      INTEGER NOT NULL,
+                        course      INTEGER NOT NULL,
+                        comments    MEDIUMTEXT,
+                        stars       TINYINT NOT NULL,
+
+                        CONSTRAINT validStars CHECK ( stars >= 1  AND stars <= 5 ),
+
+                        FOREIGN KEY (author) REFERENCES USER (id),
+                        FOREIGN KEY (course) REFERENCES COURSE (id),
+                        PRIMARY KEY (author,course) );
+
+-- Quiz table
+CREATE TABLE QUIZ ( id              INTEGER NOT NULL,
+                    course          INTEGER NOT NULL,
+                    title           VARCHAR(1024) NOT NULL,
+                    instructions    MEDIUMTEXT,
+
+                    FOREIGN KEY (course) REFERENCES COURSE (id),
+                    PRIMARY KEY (id, course) );
+
+-- Question table
+CREATE TABLE QUESTION ( number          INTEGER NOT NULL,
+                        quizId          INTEGER NOT NULL,
+                        correct         VARCHAR(1) NOT NULL,
+                        optionAtext     MEDIUMTEXT,
+                        optionBtext     MEDIUMTEXT,
+                        optionCtext     MEDIUMTEXT,
+                        optionDtext     MEDIUMTEXT,
+                        optionAimage    VARCHAR(1024),
+                        optionBimage    VARCHAR(1024),
+                        optionCimage    VARCHAR(1024),
+                        optionDimage    VARCHAR(1024),
+                        instruction     MEDIUMTEXT,    
+
+                        CONSTRAINT validAnswer  CHECK ( correct = 'a' OR
+                                                        correct = 'b' OR
+                                                        correct = 'c' OR
+                                                        correct = 'd' ),
+                    
+                        FOREIGN KEY (quizId) REFERENCES QUIZ (id),
+                        PRIMARY KEY (number, quizId) );
+
+-- Intermediate table between quiz and user table with getting result relation
+CREATE TABLE GETS_RESULT (  quizId          INTEGER NOT NULL,
+                            course          INTEGER NOT NULL,
+                            user            INTEGER NOT NULL,
+                            correctAnswers  INTEGER NOT NULL,
+
+                            FOREIGN KEY (quizId) REFERENCES QUIZ (id),
+                            FOREIGN KEY (course) REFERENCES COURSE (id),
+                            FOREIGN KEY (user) REFERENCES USER (id),
+                            PRIMARY KEY (quizId,course,user) );

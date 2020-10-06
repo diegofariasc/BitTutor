@@ -62,3 +62,21 @@ CREATE TABLE USER   (   id              INTEGER         NOT NULL,
 
                         CONSTRAINT validUserAge     CHECK ( age > 0 AND age < 100 ),
                         PRIMARY KEY (id) );
+
+-- File_resource table
+CREATE TABLE FILE_RESOURCE (    name            VARCHAR(767)    NOT NULL,
+                                course          INTEGER         NOT NULL,
+                                title           VARCHAR(255)    NOT NULL,
+                                format          VARCHAR(30)     NOT NULL DEFAULT "file",
+                                location        TINYINT         NOT NULL,
+                                description     MEDIUMTEXT,
+
+                        CONSTRAINT validFormat  CHECK ( format = 'pdf' OR
+                                                        format = 'swf' OR
+                                                        format = 'youtube' OR
+                                                        format = 'link' OR
+                                                        format = 'image' OR
+                                                        format = 'file' ),
+
+                        FOREIGN KEY (course) REFERENCES COURSE (id),
+                        PRIMARY KEY (name, course) );

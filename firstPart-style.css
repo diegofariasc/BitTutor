@@ -1,0 +1,86 @@
+/* Aqui empieza CSS de register*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+
+body{
+    font-family: 'Nunito', sans-serif;
+    background: rgb(229, 236, 241);
+}
+
+.form{
+    max-width: 500px;
+    width: 100%;
+    background: white;
+    margin: 20px auto;
+    padding: 30px;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.125);
+    font-size: 12px;
+}
+
+.form .title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: black;
+    text-align: center;
+    background-color: aquamarine;
+    border: black .5px solid;
+}
+
+.form .Basic_information label{
+    margin-bottom: 15px;
+    display: inline-flex;
+
+}
+
+.form .information {
+    margin-bottom: 5px;
+}
+
+
+.form .personal-information {
+    font-size: 12px;
+    font-weight: 700;
+    color: black;
+    margin-top: 25px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.form .resume-interest {
+    position: relative;
+}
+
+.form .resumen {
+    position: relative;
+    left: 31%;
+    margin-bottom: 25px;
+    
+}
+
+.form .boton{
+    
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white;
+    background-color: #0a65f6;
+    position: relative;
+    left: 80%;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+
+  }
+  .form .boton:hover{
+    color: #0648ff;
+    background-color: #f7fbfd;
+   
+  }
+
+/* Aqui termina CSS de register*/

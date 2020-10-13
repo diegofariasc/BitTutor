@@ -91,4 +91,92 @@ body{
 
 /* Aqui empieza CSS de Main Screen*/
 
+
+.Encabezado {
+    padding-left: 100%;
+    padding-bottom: 8%;
+    background-color: white;
+    position: absolute;
+}
+
+.logo {
+    position: absolute;
+    margin-top: 2%;
+    margin-left: 3%;
+    float: left; 
+    width: 200px;
+}
+
+.boton1{
+    
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: rgb(0, 0, 0);
+    background-color: #ffffff;
+    position: absolute;
+    left: 83%;
+    bottom: 10%;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    border: black 2px solid;
+    
+
+  }
+  .boton1:hover{
+    color: #0648ff;
+    background-color: #f7fbfd;
+   
+  }
+
+  .boton2{
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: black;
+    background-color: #ffffff;
+    position: absolute;
+    left: 90%;
+    bottom: 10%;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    border: black 2px solid;
+
+  }
+  .boton2:hover{
+    color: #0648ff;
+    background-color: #f7fbfd;
+   
+  }
+
+  .Texto-bienvenida{
+      text-align: center;
+      position: absolute;
+      margin-top: 5%;
+      margin-left: 10%;
+      color: white;
+      font-size: 22px;
+  }
+
+  .Bienvenida{
+    width: 100%;
+    height: 40%;
+    margin-top: 8%;
+    background-color: rgb(12, 92, 241);
+    position: absolute;
+  }
+
+  .welcomeimag {
+    position: absolute;
+    margin-top: 10%;
+    margin-left: 60%;
+    float: left; 
+    width: 450px;
+    height: 250px;
+}
 /* Aqui termina CSS de Main Screen*/

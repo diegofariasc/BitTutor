@@ -1,4 +1,4 @@
-/* Aqui empieza CSS de register*/
+/* Aqui empieza CSS de register y sign in*/
 *{
     margin: 0;
     padding: 0;
@@ -83,11 +83,7 @@ body{
    
   }
 
-/* Aqui termina CSS de register*/
-
-/* Aqui empieza CSS de Sign-in*/
-
-/* Aqui termina CSS de Sign-in*/
+/* Aqui termina CSS de register y sign in*/
 
 /* Aqui empieza CSS de Main Screen*/
 
@@ -178,5 +174,106 @@ body{
     float: left; 
     width: 450px;
     height: 250px;
+}
+
+.Busqueda{
+  width: 100%;
+  height: 16%;
+  margin-top: 31%;
+  background-color: rgb(194, 236, 255);
+  position: absolute;
+}
+
+.Texto-busqueda{
+  text-align: center;
+  position: absolute;
+  margin-top: 1%;
+  margin-left: 5%;
+  color: rgb(0, 0, 0);
+  font-size: 14px;
+}
+
+.field {
+  display:flex;
+  position:realtive;
+  margin:3em auto;
+  width:70%;
+  flex-direction:row;
+  box-shadow:
+   1px 1px 0 rgb(22, 160, 133),
+   2px 2px 0 rgb(22, 160, 133),
+   3px 3px 0 rgb(22, 160, 133),
+   4px 4px 0 rgb(22, 160, 133),
+   5px 5px 0 rgb(22, 160, 133),
+   6px 6px 0 rgb(22, 160, 133),
+   7px 7px 0 rgb(22, 160, 133)
+  ;
+}
+
+.field>input[type=text],
+.field>button {
+  display:block;
+  font:1.2em 'Montserrat Alternates';
+}
+
+.field>input[type=text] {
+  flex:1;
+  padding:0.6em;
+  border:0.2em solid rgb(26, 188, 156);
+}
+
+.field>button {
+  padding:0.6em 0.8em;
+  background-color:rgb(26, 188, 156);
+  color: black;
+  border:none;
+}
+
+.What-is-back{
+  width: 100%;
+  height: 160%;
+  margin-top: 40%;
+  background-color: rgb(5, 206, 179);
+  position: absolute;
+}
+
+.What-is-front{
+  width: 90%;
+  height: 90%;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  margin-left: 5%;
+  margin-right: 5%;
+  background-color: rgb(101, 246, 227);
+  position: absolute;
+  border: black 2px solid;
+}
+
+.Texto-whatis{
+  text-align: center;
+  position: absolute;
+  margin-top: 2%;
+  margin-left: 5%;
+  color: rgb(0, 0, 0);
+  font-size: 14px;
+}
+
+.Texto-what{
+  text-align: center;
+  position: absolute;
+  margin-top: 6%;
+  margin-left: 18%;
+  color: rgb(0, 0, 0);
+  font-size: 14px;
+  
+}
+
+.what-is-image {
+  position: absolute;
+  margin-top: 56%;
+  margin-left: 35%;
+  float: left; 
+  width: 450px;
+  height: 250px;
 }
 /* Aqui termina CSS de Main Screen*/

@@ -27,6 +27,16 @@ class BitTutorModel:
 
         return False
 
+
+    """
+    Method for getting the category's directory path in the file structure
+    Input:  name (str) of the category
+    Output: (str) with the category's directory path
+    """
+    def __getCategoryPath( self, name ):
+        return "Categories/" + name + "/"
+
+
     """
     Method for getting the user's directory path in the file structure
     Input:  id (int) of the user
@@ -34,6 +44,51 @@ class BitTutorModel:
     """
     def __getUserPath( self, id ):
         return "Users/" + str(id) + "/"
+
+
+    """
+    Create a new category in the database and in the file structure
+    Input:  name (str), description=None(str), image=None(bytes), 
+            imageExtension=None(str) with the category data. 
+    Output: (bool) whether the category insertion proceeded or not
+    """
+    def createCategory( self, name, description, image=None, imageExtension=None ):
+
+        try:
+
+            # Analize data for SQL code injections
+            if self.__hasSQLInjection( [ name, description ] ):
+                return False
+
+            # If data is safe , then define data to insert into database
+            instruction = "INSERT INTO CATEGORY (name, description) VALUES (%s, %s)"
+            userTuple = ( name, description )
+
+            # Execute and commit
+            cursor  = self.__connection.cursor()
+            cursor.execute( instruction, userTuple )
+            self.__connection.commit()
+
+            # If commitment is successful reflect DB changes on FS structure
+            categoryPath = self.__getCategoryPath(name)
+            mkdir( categoryPath )
+
+            # If needed write image
+            if ( image != None ):
+                imgPointer = open( categoryPath + "categoryimg." + imageExtension, 'wb')
+                imgPointer.write( image )
+                imgPointer.close()
+
+            # Successful operation
+            cursor.close()
+            return True
+
+        except:
+
+            # On rejection -> rollback
+            self.__connection.rollback()
+            cursor.close()
+            return False
 
 
     """

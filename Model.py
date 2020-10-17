@@ -2,6 +2,9 @@ import mysql.connector
 import http.server
 import socketserver
 from os import mkdir
+from os.path import isdir
+from datetime import datetime
+
 
 class BitTutorModel:
 
@@ -12,6 +15,8 @@ class BitTutorModel:
                                                         password="password", 
                                                         host="127.0.0.1",
                                                         database="BitTutor"  )
+
+
 
     """
     Method for preventing SQL-injection attacks
@@ -35,7 +40,6 @@ class BitTutorModel:
     """
     def __getCategoryPath( self, name ):
         return "Categories/" + name + "/"
-
 
     """
     Method for getting the user's directory path in the file structure
@@ -80,7 +84,9 @@ class BitTutorModel:
 
             # If commitment is successful reflect DB changes on FS structure
             categoryPath = self.__getCategoryPath(name)
-            mkdir( categoryPath )
+            
+            if not isdir(categoryPath) :
+                mkdir( categoryPath )
 
             # If needed write image
             if ( image != None ):
@@ -101,15 +107,14 @@ class BitTutorModel:
 
 
 
-   """
-    Create a new course in the database and in the file structure
-    Input:  name (str), duration(int), language(int), lowAgeRange(int),
-            upAgeRange(int), categoty(str), 
-            image=None(bytes), imageExtension=None(str) with
-            the course data. 
+    """
+    Create a new user in the database and in the file structure
+    Input:  mail (str), name (str), password(str), age(int), 
+            studyLevel(str), description=None(str), image=None(bytes), imageExtension=None(str) with
+            the user data. 
     Output: (bool) whether the user insertion proceeded or not
     """
-    def createCourse( self, name, duration, language, lowAgeRange, upAgeRange, category, image=None, imageExtension=None ):
+    def createCourse( self, teacherId, name, duration, language, lowAgeRange, upAgeRange, category, image, imageExtension ):
 
         try:
 
@@ -139,17 +144,23 @@ class BitTutorModel:
             # Execute and commit
             cursor  = self.__connection.cursor()
             cursor.execute( instruction, userTuple )
+
+            # Register course instructor
+            instruction = "INSERT INTO TEACHES (user, course ) VALUES (%s, %s)"
+            userTuple = ( teacherId, id )
+            cursor.execute( instruction, userTuple )
             self.__connection.commit()
 
             # If commitment is successful reflect DB changes on FS structure
             coursePath = self.__getCoursePath(id)
-            mkdir( coursePath )
 
-            # If needed write image
-            if ( image != None ):
-                imgPointer = open( coursePath + "courseimg." + imageExtension, 'wb')
-                imgPointer.write( image )
-                imgPointer.close()
+            if not isdir(coursePath) :
+                mkdir( coursePath )
+
+            # Write image
+            imgPointer = open( coursePath + "courseimg." + imageExtension, 'wb')
+            imgPointer.write( image )
+            imgPointer.close()
 
             # Successful operation
             cursor.close()
@@ -161,9 +172,6 @@ class BitTutorModel:
             self.__connection.rollback()
             cursor.close()
             return False
-
-
-
 
     """
     Create a new user in the database and in the file structure
@@ -206,7 +214,9 @@ class BitTutorModel:
 
             # If commitment is successful reflect DB changes on FS structure
             userPath = self.__getUserPath(id)
-            mkdir( userPath )
+
+            if not isdir(userPath) :
+                mkdir( userPath )
 
             # If needed write image
             if ( image != None ):
@@ -215,13 +225,16 @@ class BitTutorModel:
                 imgPointer.close()
 
             # Successful operation
+            cursor.close()
             return True
 
         except:
 
             # On rejection -> rollback
             self.__connection.rollback()
+            cursor.close()
             return False
+
 
 
     """
@@ -272,6 +285,68 @@ class BitTutorModel:
             cursor.close()
             return False
 
+
+    """
+    The method creates a DB entry to denote user banning 
+    Input:  user(int), course(int) ids from user and course it is being banned from
+    Output: (bool) whether the resource insertion proceeded or not
+    """
+    def banUserFromCourse( self, user, course ):
+
+        try:
+
+            # Prepare instruction
+            instruction = "INSERT INTO IS_BANNED ( user, course ) VALUES (%s, %s)"
+            userTuple = ( user, course )
+
+            # Execute and commit
+            cursor  = self.__connection.cursor()
+            cursor.execute( instruction, userTuple )
+            self.__connection.commit()
+
+            # Successful operation
+            cursor.close()
+            return True
+
+        except:
+
+            # On rejection -> rollback
+            self.__connection.rollback()
+            cursor.close()
+            return False
+
+
+    """
+    The method creates a DB entry to denote a course has been completed by an user
+    Input:  user(int), course(int) ids from user and course being completed
+    Output: (bool) whether the resource insertion proceeded or not
+    """
+    def markCourseAsCompleted( self, user, course ):
+
+        try:
+
+            # Get current date
+            currentDate = datetime.now()
+
+            # Prepare instruction
+            instruction = "INSERT INTO COMPLETES ( user, course, date ) VALUES (%s, %s, %s)"
+            userTuple = ( user, course, currentDate.strftime('%Y-%m-%d') )
+
+            # Execute and commit
+            cursor  = self.__connection.cursor()
+            cursor.execute( instruction, userTuple )
+            self.__connection.commit()
+
+            # Successful operation
+            cursor.close()
+            return True
+
+        except:
+
+            # On rejection -> rollback
+            self.__connection.rollback()
+            cursor.close()
+            return False
 
     # Get a user data given its id
     def getUserById( self, id ):

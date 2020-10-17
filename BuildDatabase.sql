@@ -6,7 +6,6 @@ USE BitTutor;
 
 -- Category table
 CREATE TABLE CATEGORY ( name            VARCHAR(255)    NOT NULL,
-                        image           VARCHAR(1024)   NOT NULL,
                         description     MEDIUMTEXT      NOT NULL,
 
                         PRIMARY KEY (name) );
@@ -14,7 +13,6 @@ CREATE TABLE CATEGORY ( name            VARCHAR(255)    NOT NULL,
 -- Course table
 CREATE TABLE COURSE (   id              INTEGER         NOT NULL,
                         name            VARCHAR(1024)   NOT NULL,
-                        image           VARCHAR(1024)   NOT NULL,
                         duration        INTEGER         NOT NULL,
                         language        VARCHAR(2)      NOT NULL,
                         lowAgeRange     TINYINT         NOT NULL, 
@@ -153,10 +151,6 @@ CREATE TABLE QUESTION ( number          INTEGER NOT NULL,
                         optionBtext     MEDIUMTEXT,
                         optionCtext     MEDIUMTEXT,
                         optionDtext     MEDIUMTEXT,
-                        optionAimage    VARCHAR(1024),
-                        optionBimage    VARCHAR(1024),
-                        optionCimage    VARCHAR(1024),
-                        optionDimage    VARCHAR(1024),
                         instruction     MEDIUMTEXT,    
 
                         CONSTRAINT validAnswer  CHECK ( correct = 'a' OR

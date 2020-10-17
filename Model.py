@@ -47,6 +47,15 @@ class BitTutorModel:
 
 
     """
+    Method for getting the course's directory path in the file structure
+    Input:  id (int) of the course
+    Output: (str) with the course's directory path
+    """
+    def __getCoursePath( self, id ):
+        return "Courses/" + str(id) + "/"
+
+
+    """
     Create a new category in the database and in the file structure
     Input:  name (str), description=None(str), image=None(bytes), 
             imageExtension=None(str) with the category data. 
@@ -89,6 +98,71 @@ class BitTutorModel:
             self.__connection.rollback()
             cursor.close()
             return False
+
+
+
+   """
+    Create a new course in the database and in the file structure
+    Input:  name (str), duration(int), language(int), lowAgeRange(int),
+            upAgeRange(int), categoty(str), 
+            image=None(bytes), imageExtension=None(str) with
+            the course data. 
+    Output: (bool) whether the user insertion proceeded or not
+    """
+    def createCourse( self, name, duration, language, lowAgeRange, upAgeRange, category, image=None, imageExtension=None ):
+
+        try:
+
+            # Analize data for SQL code injections
+            if self.__hasSQLInjection( [ name, language, category ] ):
+                return False
+
+            # Generation of a new id:
+            # Query largest id in DB
+            id = None
+            cursor = self.__connection.cursor()
+            query = "SELECT MAX(id) FROM COURSE"
+            cursor.execute( query )
+            result = cursor.fetchall()
+
+            # Check if no insertions yet. 
+            # If so, assign id 1. Otherwise assign largest id + 1
+            if ( result[0][0] == None ):
+                id = 1
+            else:
+                id = result[0][0] + 1
+
+            # If data is safe and a new id was created, then define data to insert into database
+            instruction = "INSERT INTO COURSE (id, name, duration, language, lowAgeRange, upAgeRange, category, reports) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+            userTuple = ( id, name, duration, language, lowAgeRange, upAgeRange, category, 0 )
+
+            # Execute and commit
+            cursor  = self.__connection.cursor()
+            cursor.execute( instruction, userTuple )
+            self.__connection.commit()
+
+            # If commitment is successful reflect DB changes on FS structure
+            coursePath = self.__getCoursePath(id)
+            mkdir( coursePath )
+
+            # If needed write image
+            if ( image != None ):
+                imgPointer = open( coursePath + "courseimg." + imageExtension, 'wb')
+                imgPointer.write( image )
+                imgPointer.close()
+
+            # Successful operation
+            cursor.close()
+            return True
+
+        except:
+
+            # On rejection -> rollback
+            self.__connection.rollback()
+            cursor.close()
+            return False
+
+
 
 
     """

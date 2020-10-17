@@ -224,6 +224,54 @@ class BitTutorModel:
             return False
 
 
+    """
+    The method allows to push a new resource into the course FS and DB
+    Input:  name (str), course(int), format(str), inPageLocation(int)
+            description=None(str), file=None(bytes), fileExtension=None(str) with
+            the resource data. 
+    Output: (bool) whether the resource insertion proceeded or not
+    """
+    def submitResource( self, name, course, title, format, inPageLocation, description, file=None ):
+
+        try:
+
+            # Analize data for SQL code injections
+            if self.__hasSQLInjection( [ name, title, format, description ] ):
+                return False
+
+            # If data is safe then define data to insert into database
+            instruction = "INSERT INTO FILE_RESOURCE ( name, course, title, format, inPageLocation, description ) VALUES (%s, %s, %s, %s, %s, %s)"
+            userTuple = ( name, course, title, format, inPageLocation, description )
+
+            # Execute and commit
+            cursor  = self.__connection.cursor()
+            cursor.execute( instruction, userTuple )
+            self.__connection.commit()
+
+            # If commitment is successful reflect DB changes on FS structure
+            resourcePath = self.__getCoursePath(course) + "Content/"
+
+            if not isdir(resourcePath) :
+                mkdir( resourcePath )
+            
+
+            # If needed write file
+            if ( file != None ):
+                imgPointer = open( resourcePath + name, 'wb')
+                imgPointer.write( file )
+                imgPointer.close()
+
+            # Successful operation
+            cursor.close()
+            return True
+
+        except:
+
+            # On rejection -> rollback
+            self.__connection.rollback()
+            cursor.close()
+            return False
+
 
     # Get a user data given its id
     def getUserById( self, id ):

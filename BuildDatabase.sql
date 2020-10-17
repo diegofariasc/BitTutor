@@ -50,7 +50,6 @@ CREATE TABLE USER   (   id              INTEGER         NOT NULL,
                         age             TINYINT         NOT NULL,
                         studyLevel      VARCHAR(10)     NOT NULL,
                         description     MEDIUMTEXT,
-                        image           VARCHAR(1024),
 
 
                         CONSTRAINT validStudyLevel  CHECK ( studyLevel = 'elementary' OR

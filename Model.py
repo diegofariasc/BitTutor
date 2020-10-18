@@ -59,6 +59,11 @@ class BitTutorModel:
         return "Courses/" + str(id) + "/"
 
 
+
+    # -----------------------------------------------------------------
+    # DB ENTRY CREATION METHODS
+    # -----------------------------------------------------------------
+
     """
     Create a new category in the database and in the file structure
     Input:  name (str), description=None(str), image=None(bytes), 
@@ -75,11 +80,11 @@ class BitTutorModel:
 
             # If data is safe , then define data to insert into database
             instruction = "INSERT INTO CATEGORY (name, description) VALUES (%s, %s)"
-            userTuple = ( name, description )
+            categoryTuple = ( name, description )
 
             # Execute and commit
             cursor  = self.__connection.cursor()
-            cursor.execute( instruction, userTuple )
+            cursor.execute( instruction, categoryTuple )
             self.__connection.commit()
 
             # If commitment is successful reflect DB changes on FS structure
@@ -139,11 +144,11 @@ class BitTutorModel:
 
             # If data is safe and a new id was created, then define data to insert into database
             instruction = "INSERT INTO COURSE (id, name, duration, language, lowAgeRange, upAgeRange, category, reports) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-            userTuple = ( id, name, duration, language, lowAgeRange, upAgeRange, category, 0 )
+            courseTuple = ( id, name, duration, language, lowAgeRange, upAgeRange, category, 0 )
 
             # Execute and commit
             cursor  = self.__connection.cursor()
-            cursor.execute( instruction, userTuple )
+            cursor.execute( instruction, courseTuple )
 
             # Register course instructor
             instruction = "INSERT INTO TEACHES (user, course ) VALUES (%s, %s)"
@@ -254,11 +259,11 @@ class BitTutorModel:
 
             # If data is safe then define data to insert into database
             instruction = "INSERT INTO FILE_RESOURCE ( name, course, title, format, inPageLocation, description ) VALUES (%s, %s, %s, %s, %s, %s)"
-            userTuple = ( name, course, title, format, inPageLocation, description )
+            resourceTuple = ( name, course, title, format, inPageLocation, description )
 
             # Execute and commit
             cursor  = self.__connection.cursor()
-            cursor.execute( instruction, userTuple )
+            cursor.execute( instruction, resourceTuple )
             self.__connection.commit()
 
             # If commitment is successful reflect DB changes on FS structure
@@ -297,11 +302,42 @@ class BitTutorModel:
 
             # Prepare instruction
             instruction = "INSERT INTO IS_BANNED ( user, course ) VALUES (%s, %s)"
-            userTuple = ( user, course )
+            newTuple = ( user, course )
 
             # Execute and commit
             cursor  = self.__connection.cursor()
-            cursor.execute( instruction, userTuple )
+            cursor.execute( instruction, newTuple )
+            self.__connection.commit()
+
+            # Successful operation
+            cursor.close()
+            return True
+
+        except:
+
+            # On rejection -> rollback
+            self.__connection.rollback()
+            cursor.close()
+            return False
+
+
+    """
+    The method creates a DB entry with a review
+    Input:  author(int), course(int) ids from user and course being reviewed 
+            stars(int) the number of stars given, comments(str) user comments
+    Output: (bool) whether the resource insertion proceeded or not
+    """
+    def addReview( self, author, course, stars, comments=None ):
+
+        try:
+
+            # Prepare instruction
+            instruction = "INSERT INTO REVIEWS ( author, course, comments, stars ) VALUES (%s, %s, %s, %s)"
+            reviewTuple = ( author, course, comments, stars )
+
+            # Execute and commit
+            cursor  = self.__connection.cursor()
+            cursor.execute( instruction, reviewTuple )
             self.__connection.commit()
 
             # Successful operation
@@ -330,7 +366,57 @@ class BitTutorModel:
 
             # Prepare instruction
             instruction = "INSERT INTO COMPLETES ( user, course, date ) VALUES (%s, %s, %s)"
-            userTuple = ( user, course, currentDate.strftime('%Y-%m-%d') )
+            newTuple = ( user, course, currentDate.strftime('%Y-%m-%d') )
+
+            # Execute and commit
+            cursor  = self.__connection.cursor()
+            cursor.execute( instruction, newTuple )
+            self.__connection.commit()
+
+            # Successful operation
+            cursor.close()
+            return True
+
+        except:
+
+            # On rejection -> rollback
+            self.__connection.rollback()
+            cursor.close()
+            return False
+
+
+    """
+    The method creates a new quiz in the DB
+    Input:  course(int), title(str), instructions(str) with
+            the quiz data. 
+    Output: (bool) whether the user insertion proceeded or not
+    """
+    def createQuiz( self, course, title, instructions=None ):
+
+        try:
+
+            # Analize data for SQL code injections
+            if self.__hasSQLInjection( [ title, instructions ] ):
+                return False
+
+            # Generation of a new id:
+            # Query largest id in DB
+            id = None
+            cursor = self.__connection.cursor()
+            query = "SELECT MAX(id) FROM QUIZ"
+            cursor.execute( query )
+            result = cursor.fetchall()
+
+            # Check if no insertions yet. 
+            # If so, assign id 1. Otherwise assign largest id + 1
+            if ( result[0][0] == None ):
+                id = 1
+            else:
+                id = result[0][0] + 1
+
+            # If data is safe and a new id was created, then define data to insert into database
+            instruction = "INSERT INTO QUIZ (id, course, title, instructions ) VALUES (%s, %s, %s, %s)"
+            userTuple = ( id, course, title, instructions )
 
             # Execute and commit
             cursor  = self.__connection.cursor()
@@ -348,6 +434,103 @@ class BitTutorModel:
             cursor.close()
             return False
 
+
+    """
+    The method creates a new question for a quiz in the DB
+    Input:  quizId(int), instruction(str), 
+            correct(str), optionAtext(str), optionBtext(str), 
+            optionCtext(str), optionDtext(str)
+    Output: (bool) whether the user insertion proceeded or not
+    """
+    def createQuestion( self, quizId, questionInstruction, correct, optionAtext, optionBtext, optionCtext, optionDtext ):
+
+        try:
+
+            # Analize data for SQL code injections
+            if self.__hasSQLInjection( [ questionInstruction, optionAtext, optionBtext, optionCtext, optionDtext ] ):
+                return False
+
+            # Generation of a new id:
+            # Query largest id in DB
+            number = None
+            cursor = self.__connection.cursor()
+            query = "SELECT MAX(number) FROM QUESTION WHERE quizId = " + str(quizId)
+            cursor.execute( query )
+            result = cursor.fetchall()
+
+            # Check if no insertions yet. 
+            # If so, assign id 1. Otherwise assign largest id + 1
+            if ( result[0][0] == None ):
+                number = 1
+            else:
+                number = result[0][0] + 1
+
+            # If data is safe and a new id was created, then define data to insert into database
+            instruction = "INSERT INTO QUESTION ( number, quizId, instruction, correct, optionAtext, optionBtext, optionCtext, optionDtext ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+            questionTuple = ( number, quizId, questionInstruction, correct, optionAtext, optionBtext, optionCtext, optionDtext )
+
+            # Execute and commit
+            cursor  = self.__connection.cursor()
+            cursor.execute( instruction, questionTuple )
+            self.__connection.commit()
+
+            # Successful operation
+            cursor.close()
+            return True
+
+        except:
+
+            # On rejection -> rollback
+            self.__connection.rollback()
+            cursor.close()
+            return False
+
+
+    
+    """
+    The method creates a DB entry to denote a user result on a quiz
+    Input:  quizId(int), user(int) ids from user and quiz result is being registered on, 
+            correctAnswers(int) result of the user
+    Output: (bool) whether the resource insertion proceeded or not
+    """
+    def registerQuizResult( self, quizId, user, correctAnswers ):
+
+        try:
+
+            # Prepare instruction
+            instruction = "INSERT INTO GETS_RESULT ( quizId, user, correctAnswers ) VALUES (%s, %s, %s)"
+            newTuple = ( quizId, user, correctAnswers )
+
+            # Execute and commit
+            cursor  = self.__connection.cursor()
+            cursor.execute( instruction, newTuple )
+            self.__connection.commit()
+
+            # Successful operation
+            cursor.close()
+            return True
+
+        except:
+
+            # On rejection -> rollback
+            self.__connection.rollback()
+            cursor.close()
+            return False
+
+
+
+    # -----------------------------------------------------------------
+    # DB ENTRY DELETION METHODS
+    # -----------------------------------------------------------------
+
+
+
+
+    # -----------------------------------------------------------------
+    # DB INFORMATION RECOVERY METHODS
+    # -----------------------------------------------------------------
+
+
     # Get a user data given its id
     def getUserById( self, id ):
 
@@ -358,7 +541,3 @@ class BitTutorModel:
         cursor.execute( query )
 
         return cursor[0]
-
-
-
-

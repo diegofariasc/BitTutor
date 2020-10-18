@@ -141,17 +141,17 @@ CREATE TABLE QUIZ ( id              INTEGER NOT NULL,
                     instructions    MEDIUMTEXT,
 
                     FOREIGN KEY (course) REFERENCES COURSE (id),
-                    PRIMARY KEY (id, course) );
+                    PRIMARY KEY (id) );
 
 -- Question table
 CREATE TABLE QUESTION ( number          INTEGER NOT NULL,
                         quizId          INTEGER NOT NULL,
+                        instruction     MEDIUMTEXT NOT NULL,    
                         correct         VARCHAR(1) NOT NULL,
-                        optionAtext     MEDIUMTEXT,
-                        optionBtext     MEDIUMTEXT,
-                        optionCtext     MEDIUMTEXT,
-                        optionDtext     MEDIUMTEXT,
-                        instruction     MEDIUMTEXT,    
+                        optionAtext     MEDIUMTEXT NOT NULL,
+                        optionBtext     MEDIUMTEXT NOT NULL,
+                        optionCtext     MEDIUMTEXT NOT NULL,
+                        optionDtext     MEDIUMTEXT NOT NULL,
 
                         CONSTRAINT validAnswer  CHECK ( correct = 'a' OR
                                                         correct = 'b' OR
@@ -163,11 +163,9 @@ CREATE TABLE QUESTION ( number          INTEGER NOT NULL,
 
 -- Intermediate table between quiz and user table with getting result relation
 CREATE TABLE GETS_RESULT (  quizId          INTEGER NOT NULL,
-                            course          INTEGER NOT NULL,
                             user            INTEGER NOT NULL,
                             correctAnswers  INTEGER NOT NULL,
 
                             FOREIGN KEY (quizId) REFERENCES QUIZ (id),
-                            FOREIGN KEY (course) REFERENCES COURSE (id),
                             FOREIGN KEY (user) REFERENCES USER (id),
-                            PRIMARY KEY (quizId,course,user) );
+                            PRIMARY KEY (quizId,user) );

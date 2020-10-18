@@ -1,0 +1,195 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+
+
+body{
+    font-family: 'Nunito', sans-serif;
+    background: rgb(229, 236, 241);
+}
+
+.icon{
+	margin-left: 1220px;
+	margin-top: 20px;
+	height: 100px;
+	width: 100px;
+}
+
+.mail{
+	margin-left: 1000px;
+	margin-top: -40px;
+	font-size: 20px;
+}
+
+.myCourses-button{
+	margin-left: 810px;
+	margin-top: -60px;
+	font-size: 20px;
+	position: absolute;
+	text-decoration: none;
+    padding: 25px;
+    color: black;
+    background-color: white;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+	
+}
+
+.logo{
+	position: absolute;
+	margin-top: -135px;
+	width:350px;
+}
+
+.titleCourse{
+	text-align:center;
+	margin-top: 60px;
+	font-size: 40px;
+	text-shadow: 7px 4px 5px blue;
+}
+
+.Modern{
+	text-align: justify;
+	/*position: absolute;*/
+	margin-top: 5%;
+	margin-left: 5%;
+	font-size: 20px;
+	width: 600px;
+}
+
+.computer{
+	margin-left: 700px;
+	margin-top: -400px;
+	height: 500px;
+	width: 600px;
+	position: relative;
+}
+
+.Great{
+	text-align: justify;
+	/*position: absolute;*/
+	margin-left: 5%;
+	font-size: 20px;
+	width: 1200px;
+}
+
+.languages{
+	margin-left: 50px;
+	margin-top: 50px;
+	height: 400px;
+	width: 400px;
+	position: absolute;
+}
+
+.Great2{
+	text-align: justify;
+	position: relative;
+	margin-top: 70px;
+	margin-left: 40%;
+	font-size: 20px;
+	width: 750px;
+}
+
+.camara{
+	margin-top: 250px;
+	margin-left: 8%;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	
+}
+
+.libros{
+	margin-top: 400px;
+	margin-left: 8%;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+}
+
+.video{
+	margin-top: 550px;
+	margin-left: 8%;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+} 
+
+.sticker{
+	margin-top: 700px;
+	margin-left: 8%;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+}
+
+.video-button{
+	text-decoration: none;
+    padding: 15px;
+    font-weight: 600;
+    font-size: 20px;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+	margin-top: 280px;
+	margin-left: 18%;
+	position:absolute;
+	width: 1000px;
+}
+
+.read-button{
+	text-decoration: none;
+    padding: 15px;
+    font-weight: 600;
+    font-size: 20px;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+	margin-top: 420px;
+	margin-left: 18%;
+	position:absolute;
+	width: 1000px;
+}
+
+.fun-button{
+	text-decoration: none;
+    padding: 15px;
+    font-weight: 600;
+    font-size: 20px;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+	margin-top: 570px;
+	margin-left: 18%;
+	position:absolute;
+	width: 1000px;
+}
+
+.test-button{
+	text-decoration: none;
+    padding: 15px;
+    font-weight: 600;
+    font-size: 20px;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+	margin-top: 710px;
+	margin-left: 18%;
+	position:absolute;
+	width: 1000px;
+}
+
+
+
+
+
+
+
+

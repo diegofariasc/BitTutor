@@ -3,6 +3,7 @@ import http.server
 import socketserver
 from os import mkdir
 from os.path import isdir
+from shutil import rmtree
 from datetime import datetime
 
 
@@ -292,9 +293,69 @@ class BitTutorModel:
 
 
     """
+    The method creates a DB entry to denote that a user wishes to take a course 
+    Input:  user(int), course(int) ids from user and wished course
+    Output: (bool) whether the wishing flag insertion proceeded or not
+    """
+    def addToWishList( self, user, course ):
+
+        try:
+
+            # Prepare instruction
+            instruction = "INSERT INTO WISHES ( user, course ) VALUES (%s, %s)"
+            newTuple = ( user, course )
+
+            # Execute and commit
+            cursor  = self.__connection.cursor()
+            cursor.execute( instruction, newTuple )
+            self.__connection.commit()
+
+            # Successful operation
+            cursor.close()
+            return True
+
+        except:
+
+            # On rejection -> rollback
+            self.__connection.rollback()
+            cursor.close()
+            return False
+
+
+    """
+    The method creates a DB entry to denote that a user subscribes into a course
+    Input:  user(int), course(int) ids from user and wished course
+    Output: (bool) whether the wishing flag insertion proceeded or not
+    """
+    def subscribe( self, user, course ):
+
+        try:
+
+            # Prepare instruction
+            instruction = "INSERT INTO SUBSCRIBES ( user, course ) VALUES (%s, %s)"
+            newTuple = ( user, course )
+
+            # Execute and commit
+            cursor  = self.__connection.cursor()
+            cursor.execute( instruction, newTuple )
+            self.__connection.commit()
+
+            # Successful operation
+            cursor.close()
+            return True
+
+        except:
+
+            # On rejection -> rollback
+            self.__connection.rollback()
+            cursor.close()
+            return False
+
+
+    """
     The method creates a DB entry to denote user banning 
     Input:  user(int), course(int) ids from user and course it is being banned from
-    Output: (bool) whether the resource insertion proceeded or not
+    Output: (bool) whether the banning flag insertion proceeded or not
     """
     def banUserFromCourse( self, user, course ):
 
@@ -320,12 +381,11 @@ class BitTutorModel:
             cursor.close()
             return False
 
-
     """
     The method creates a DB entry with a review
     Input:  author(int), course(int) ids from user and course being reviewed 
             stars(int) the number of stars given, comments(str) user comments
-    Output: (bool) whether the resource insertion proceeded or not
+    Output: (bool) whether the review insertion proceeded or not
     """
     def addReview( self, author, course, stars, comments=None ):
 
@@ -355,7 +415,7 @@ class BitTutorModel:
     """
     The method creates a DB entry to denote a course has been completed by an user
     Input:  user(int), course(int) ids from user and course being completed
-    Output: (bool) whether the resource insertion proceeded or not
+    Output: (bool) whether the mark insertion proceeded or not
     """
     def markCourseAsCompleted( self, user, course ):
 
@@ -389,7 +449,7 @@ class BitTutorModel:
     The method creates a new quiz in the DB
     Input:  course(int), title(str), instructions(str) with
             the quiz data. 
-    Output: (bool) whether the user insertion proceeded or not
+    Output: (bool) whether the quiz insertion proceeded or not
     """
     def createQuiz( self, course, title, instructions=None ):
 
@@ -440,7 +500,7 @@ class BitTutorModel:
     Input:  quizId(int), instruction(str), 
             correct(str), optionAtext(str), optionBtext(str), 
             optionCtext(str), optionDtext(str)
-    Output: (bool) whether the user insertion proceeded or not
+    Output: (bool) whether the question insertion proceeded or not
     """
     def createQuestion( self, quizId, questionInstruction, correct, optionAtext, optionBtext, optionCtext, optionDtext ):
 
@@ -491,7 +551,7 @@ class BitTutorModel:
     The method creates a DB entry to denote a user result on a quiz
     Input:  quizId(int), user(int) ids from user and quiz result is being registered on, 
             correctAnswers(int) result of the user
-    Output: (bool) whether the resource insertion proceeded or not
+    Output: (bool) whether the result insertion proceeded or not
     """
     def registerQuizResult( self, quizId, user, correctAnswers ):
 
@@ -518,17 +578,151 @@ class BitTutorModel:
             return False
 
 
-
+    """
+    The method allows to remove an user and all its dependencies on the DB and the FS
+    Input:  id(int) with user id
+    Output: (bool) whether the resource insertion proceeded or not
+    """
     # -----------------------------------------------------------------
     # DB ENTRY DELETION METHODS
     # -----------------------------------------------------------------
 
 
+    def deleteUser( self, id ):
+
+        try: 
+
+            # Extract user course dependencies
+            cursor = self.__connection.cursor()
+            query = "SELECT * FROM TEACHES where user = " + str(id) 
+            cursor.execute( query )
+            result = cursor.fetchall()
+
+            # Prepare instruction for user deletion
+            instruction = "DELETE FROM USER WHERE id = " + str(id)
+
+            # Execute and commit
+            cursor  = self.__connection.cursor()
+            cursor.execute( instruction )
+            self.__connection.commit()
+
+            # Apply changes on FS
+            userPath = self.__getUserPath( id )
+            rmtree(userPath)
+
+            # Removing all teaching courses
+            for course in result:
+
+                coursePath = self.__getCoursePath( course[1] )
+                rmtree(coursePath)
+
+            # Successful operation
+            cursor.close()
+            return True
+
+        except:
+
+            # On rejection -> rollback
+            self.__connection.rollback()
+            cursor.close()
+            return False            
+
+
+    """
+    The method allows to remove a course and all its dependencies on the DB and the FS
+    Input:  id(int) with user id
+    Output: (bool) whether the resource insertion proceeded or not
+    """
+    def deleteCourse( self, id ):
+
+        try:
+
+            # Prepare instruction
+            instruction = "DELETE FROM COURSE WHERE id = " + str(id)
+
+            # Execute and commit
+            cursor  = self.__connection.cursor()
+            cursor.execute( instruction )
+            self.__connection.commit()
+
+            # Apply changes on FS
+            coursePath = self.__getCoursePath( id )
+            rmtree(coursePath)
+
+            # Successful operation
+            cursor.close()
+            return True
+
+        except:
+
+            # On rejection -> rollback
+            self.__connection.rollback()
+            cursor.close()
+            return False
+
+
+    """
+    The method allows to remove a user subscription from a course
+    Input:  user(int), course(int) with user and id
+    Output: (bool) whether the resource insertion proceeded or not
+    """
+    def unsubscribe( self, user, course ):
+
+        try:
+
+            # Prepare instruction
+            instruction = "DELETE FROM SUBSCRIBES WHERE user = " + str(user) + " AND course = " + str(course)
+
+            # Execute and commit
+            cursor  = self.__connection.cursor()
+            cursor.execute( instruction )
+            self.__connection.commit()
+
+            # Successful operation
+            cursor.close()
+            return True
+
+        except:
+
+            # On rejection -> rollback
+            self.__connection.rollback()
+            cursor.close()
+            return False
+
+
+    """
+    The method allows to remove a course from a user's wish list
+    Input:  user(int), course(int) with user and id
+    Output: (bool) whether the resource insertion proceeded or not
+    """
+    def removeFromWishList( self, user, course ):
+
+        try:
+
+            # Prepare instruction
+            instruction = "DELETE FROM WISHES WHERE user = " + str(user) + " AND course = " + str(course)
+
+            # Execute and commit
+            cursor  = self.__connection.cursor()
+            cursor.execute( instruction )
+            self.__connection.commit()
+
+            # Successful operation
+            cursor.close()
+            return True
+
+        except:
+
+            # On rejection -> rollback
+            self.__connection.rollback()
+            cursor.close()
+            return False
 
 
     # -----------------------------------------------------------------
     # DB INFORMATION RECOVERY METHODS
     # -----------------------------------------------------------------
+
 
 
     # Get a user data given its id

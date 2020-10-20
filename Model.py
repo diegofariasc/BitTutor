@@ -32,7 +32,47 @@ class BitTutorModel:
 
         for field in fields:
 
-            if str( field ).__contains__(";"):
+            entry = str(field).lower()
+            entry = " ".join(entry.split())
+
+            if  entry.startswith("\"") or\
+                entry.startswith("'") or\
+                entry.__contains__(";") or \
+                entry.__contains__("--") or \
+                entry.__contains__("drop table") or\
+                entry.__contains__("drop database") or\
+                entry.__contains__("delete from category") or\
+                entry.__contains__("delete from course") or\
+                entry.__contains__("delete from user") or\
+                entry.__contains__("delete from file_resource") or\
+                entry.__contains__("delete from has_accessed") or\
+                entry.__contains__("delete from subscribes") or\
+                entry.__contains__("delete from teaches") or\
+                entry.__contains__("delete from is_banned") or\
+                entry.__contains__("delete from wishes") or\
+                entry.__contains__("delete from completes") or\
+                entry.__contains__("delete from reviews") or\
+                entry.__contains__("delete from quiz") or\
+                entry.__contains__("delete from question") or\
+                entry.__contains__("delete from gets_result") or\
+                entry.__contains__("update category") or\
+                entry.__contains__("update course") or\
+                entry.__contains__("update user") or\
+                entry.__contains__("update file_resource") or\
+                entry.__contains__("update has_accessed") or\
+                entry.__contains__("update subscribes") or\
+                entry.__contains__("update teaches") or\
+                entry.__contains__("update is_banned") or\
+                entry.__contains__("update wishes") or\
+                entry.__contains__("update completes") or\
+                entry.__contains__("update reviews") or\
+                entry.__contains__("update quiz") or\
+                entry.__contains__("update question") or\
+                entry.__contains__("update gets_result") or\
+                entry.__contains__("' or") or\
+                entry.__contains__("\" or") or\
+                entry.__contains__("' select") or\
+                entry.__contains__("\" select"): 
                 return True
 
         return False

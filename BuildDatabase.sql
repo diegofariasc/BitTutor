@@ -18,6 +18,7 @@ CREATE TABLE COURSE (   id              INTEGER         NOT NULL,
                         upAgeRange      TINYINT         NOT NULL, 
                         category        VARCHAR(255)    NOT NULL,
                         reports         TINYINT         NOT NULL,
+                        description     MEDIUMTEXT      NOT NULL,
 
                         CONSTRAINT validLanguage    CHECK ( language = 'es' OR
                                                             language = 'en' OR

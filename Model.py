@@ -1617,9 +1617,10 @@ class BitTutorModel:
 
 
     """
-    The method allows to extract an user's profile image from FS given its id
-    Input:  userId(int) with the user's id number
-    Output: None (if not found) and (bytes) if found with the image
+    The method allows to modify an user's profile image from FS given its id
+    Input:  userId(int) with the user's id number, newImage(bytes), newImageExtension(str)
+            with the image information
+    Output: False or true indicating whether change succeeded or not
     """
     def modifyUserImage( self, userId, newImage=None, newImageExtension=None ):
 

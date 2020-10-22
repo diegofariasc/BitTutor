@@ -188,6 +188,81 @@ body{
 
 
 
+.label-question{
+	margin-left: 100px;
+	margin-bottom: 15px;
+    display: inline-flex;
+	font-family: 'Roboto Medium', sans-serif;
+	font-size: 25px;
+	font-weight: 50px;
+}
+
+.input-question{
+	margin-left: 100px;
+	margin-bottom: 30px;
+	width: 1000px;
+	background-color:whitesmoke;
+	font-size: 15px;
+	padding-right: 20px;
+}
+
+.label-options{
+	margin-left: 100px;
+	margin-bottom: 15px;
+    display: inline-flex;
+	font-family: 'Roboto Medium', sans-serif;
+	font-size: 25px;
+	font-weight: 50px;
+}
+
+.label-letters{
+	margin-left: 100px;
+	margin-bottom: 15px;
+    display: inline-flex;
+	font-family: 'Roboto Medium', sans-serif;
+	font-size: 15px;
+	font-weight: 100px;
+}
+
+.input-letters{
+	margin-left: 30px;
+	margin-bottom: 30px;
+	width: 900px;
+	background-color:whitesmoke;
+	font-size: 15px;
+	padding-right: 20px;
+}
+
+.answer{
+	margin-left: 100px;
+	margin-bottom: 15px;
+    display: inline-flex;
+	font-family: 'Roboto Medium', sans-serif;
+	font-size: 25px;
+	font-weight: 50px;
+}
+
+.boton{
+	padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white;
+    background-color: #0a65f6;
+    position: relative;
+    left: 75%;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+	top:50px;
+}
+
+
+
+
+
+
+
 
 
 

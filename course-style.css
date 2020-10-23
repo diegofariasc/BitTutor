@@ -258,6 +258,30 @@ body{
 }
 
 
+.options{
+	padding-top: 5px;
+	margin-left: 400px;
+	position: relative;
+	
+}
+
+.options ul li{ 
+	list-style: none;
+	color: black;
+}
+
+.label-opt{
+	margin-left: 300px;
+	margin-bottom: 15px;
+	margin-top: 15px;
+    display: inline-flex;
+	font-family: 'Roboto Medium', sans-serif;
+	font-size: 25px;
+	font-weight: 50px;
+}
+
+
+
 
 
 

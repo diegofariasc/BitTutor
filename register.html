@@ -2,68 +2,96 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
-
+    <title>BitTutor - Register</title>
+    <script src = "login.js"></script>
     <link rel="stylesheet" href="firstPart-style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <div class="form">
 
-    <div class="title">
-    Register
-</div>
-
-<div class="Basic_information">
-
-<div>
-      <label for="fullname">Fullname * </label>
-      <input type="text" size="47" name="fullname" id="fullname" required>
+  <div>
+    <img src="Pictures/introduction.png" class="main" alt="">
+    <h2 class="logo1" >BitTutor | Online Educational Platform</h2>
+    <h1 class="register">Register</h1>
   </div>
 
-<div>
-      <label for="email">Email (username) * </label>
-      <input type="text" size="40" name="email" id="email" required>
+  <div>
+    <label class="register_fieldset">Account information</label>
+  </div>
+  
+
+  <div>
+    <br><br><img src="Pictures/error.png" alt="" class="field">
+    <label for="fullname" class="register_field"> Full name</label><br>
+    <input type="text" name="fullname" id="fullname" class="register" required>
+    
   </div>
 
-<div>
-      <label for="password">Password * </label>
-      <input type="password" size="47" name="password" id="password" placeholder="please enter strong password" required>
+  <div>
+    <img src="Pictures/error.png" alt="" class="field">
+    <label for="email" class="register_field"> Email</label><br>
+    <input type="text" name="email" id="email" class="register" required>
+    <label class="register_spec">Pro tip: if you're planning to teach on BitTutor better use a dedicated email account</label>
+  </div>  
+
+  <div>
+    <img src="Pictures/error.png" alt="" class="field">
+    <label for="password" class="register_field"> Password</label><br>
+    <input type="password" name="password" id="password" class="register" required>
+    <label class="register_spec">Pro tip: a secure password is at least 8 characters long </label>
+  </div>
+
+  <div>
+    <img src="Pictures/error.png" alt="" class="field">
+    <label for="password" class="register_field"> Confirm password</label><br>
+    <input type="password" name="password" id="password" class="register" required>
+  </div>
+
+  <div>
+    <br><br><label class="register_fieldset">Profile information</label>
+  </div>
+
+  <div>
+    <br><br><img src="Pictures/error.png" alt="" class="field">
+    <label for="studies" class="register_field"> Maximum level of studies: </label>
+    <select name="studies" id="studies">
+      <option value="elementary">Elementary school</option>
+      <option value="middle">Middle school</option>
+      <option value="high">High school</option>
+      <option value="bachelor">Bachelor degree</option>
+      <option value="master">Master degree</option>
+      <option value="phd">Ph. D.</option>
+    </select>
+  </div>
+
+  <div>
+    <img src="Pictures/error.png" alt="" class="field">
+    <label for="age" class="register_field"> Current age: </label>
+    <input type="number" name="age" id="age" class="numeric" min="8" max="99" value="15" required>
   </div>
 
 
-
-<div class="personal-information">
-Personal Information
-</div>
-
-<div>
-      <label for="studies">Maximum level of studies  </label>
-      <input type="text" size="40" name="studies" id="studies">
+  <div>
+    <label for="resume" class="register_field"> Resume, interests or hobbies</label><br>
+    <textarea name="resume" id="resume" rows="4" cols="39" maxlength="400" ></textarea>
   </div>
 
-<div class="resume-interest">
-Add resume or interests
-</div>
-
-<div class="resumen">
-  <textarea name="add-resume" rows="4" cols="39" maxlength="400" ></textarea>
-</div>
-
-<div>
-      <label for="imagen">Add image </label>
-      <input type="file" size="40" name="imagen" id="imagen">
+  <div>
+    <br><label for="image" class="register_field">Select a profile image </label>
+    <input type="file" id="image" class="register_field">
   </div>
 
-<div class="mandatory-information">
-* Mandatory Information
-</div>
+  <br><img src="Pictures/error.png" alt="" class="field">
+  <label for="password" class="register_spec"> Mandatory information</label><br>
 
 
-<a href="" class="boton">LOG IN</a>
+  <div>
+    <button class="register" onclick="registerUser()">Register</button>
+    <button class="changelogin"><a href="sign-in.html">Log in</a></button>
+  </div>
 
-</div> <!--Basic_information-->
-</div> <!--Es el de form-->
+</div> 
+</div> 
 </body>
 </html>

@@ -1,329 +1,188 @@
 /* Aqui empieza CSS de register y sign in*/
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    
+
+a { 
+  text-decoration: none; 
 }
 
 body{
-    font-family: 'Nunito', sans-serif;
-    background: rgb(229, 236, 241);
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: white;
 }
 
-.form{
-    max-width: 500px;
-    width: 100%;
-    background: white;
-    margin: 20px auto;
-    padding: 30px;
-    box-shadow: 1px 1px 2px rgba(0,0,0,0.125);
-    font-size: 12px;
+h1 {
+  margin-left: 15%;
+  margin-right: 15%;
+  font-weight: lighter;
+  font-size: 28pt;
+  color: #1B5783;
 }
 
-.form .title {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 25px;
-    color: black;
-    text-align: center;
-    background-color: aquamarine;
-    border: black .5px solid;
+h1.login {
+  margin-left: 15%;
+  margin-right: 15%;
+}
+h1.register {
+  margin-left: 0%;
+  margin-right: 0%;
 }
 
-.form .Basic_information label{
-    margin-bottom: 15px;
-    display: inline-flex;
+h2{
+  margin-top: 0px;
+  margin-bottom: 60px;
 
+  font-weight: lighter;
+  font-size: 18pt;
+  text-align: center;
 }
 
-.form .information {
-    margin-bottom: 5px;
-}
-
-
-.form .personal-information {
-    font-size: 12px;
-    font-weight: 700;
-    color: black;
-    margin-top: 25px;
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-.form .resume-interest {
-    position: relative;
-}
-
-.form .resumen {
-    position: relative;
-    left: 31%;
-    margin-bottom: 25px;
-    
-}
-
-.form .boton{
-    
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: white;
-    background-color: #0a65f6;
-    position: relative;
-    left: 80%;
-    font-size: 14px;
-    font-weight: 700;
-    text-align: center;
-
-  }
-  .form .boton:hover{
-    color: #0648ff;
-    background-color: #f7fbfd;
-   
-  }
-
-/* Aqui termina CSS de register y sign in*/
-
-/* Aqui empieza CSS de Main Screen*/
-
-
-.Encabezado {
-    padding-left: 100%;
-    padding-bottom: 8%;
-    background-color: white;
-    position: absolute;
-}
-
-.logo {
-    position: absolute;
-    margin-top: 2%;
-    margin-left: 3%;
-    float: left; 
-    width: 200px;
-}
-
-.boton1{
-    
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 15px;
-    padding-right: 15px;
-    color: rgb(0, 0, 0);
-    background-color: #ffffff;
-    position: absolute;
-    left: 83%;
-    bottom: 10%;
-    font-size: 14px;
-    font-weight: 700;
-    text-align: center;
-    border: black 2px solid;
-    
-
-  }
-  .boton1:hover{
-    color: #0648ff;
-    background-color: #f7fbfd;
-   
-  }
-
-  .boton2{
-
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 15px;
-    padding-right: 15px;
-    color: black;
-    background-color: #ffffff;
-    position: absolute;
-    left: 90%;
-    bottom: 10%;
-    font-size: 14px;
-    font-weight: 700;
-    text-align: center;
-    border: black 2px solid;
-
-  }
-  .boton2:hover{
-    color: #0648ff;
-    background-color: #f7fbfd;
-   
-  }
-
-  .Texto-bienvenida{
-      text-align: center;
-      position: absolute;
-      margin-top: 5%;
-      margin-left: 10%;
-      color: white;
-      font-size: 22px;
-  }
-
-  .Bienvenida{
-    width: 100%;
-    height: 40%;
-    margin-top: 8%;
-    background-color: rgb(12, 92, 241);
-    position: absolute;
-  }
-
-  .welcomeimag {
-    position: absolute;
-    margin-top: 10%;
-    margin-left: 60%;
-    float: left; 
-    width: 450px;
-    height: 250px;
-}
-
-.Busqueda{
+img.main{
   width: 100%;
-  height: 16%;
-  margin-top: 31%;
-  background-color: rgb(194, 236, 255);
-  position: absolute;
+  margin-bottom: 0px;
 }
 
-.Texto-busqueda{
-  text-align: center;
-  position: absolute;
-  margin-top: 1%;
-  margin-left: 5%;
-  color: rgb(0, 0, 0);
-  font-size: 14px;
+img.field{
+  width: 4%;
+  margin-bottom: 0px;
 }
 
-.field {
-  display:flex;
-  position:realtive;
-  margin:3em auto;
-  width:70%;
-  flex-direction:row;
-  box-shadow:
-   1px 1px 0 rgb(22, 160, 133),
-   2px 2px 0 rgb(22, 160, 133),
-   3px 3px 0 rgb(22, 160, 133),
-   4px 4px 0 rgb(22, 160, 133),
-   5px 5px 0 rgb(22, 160, 133),
-   6px 6px 0 rgb(22, 160, 133),
-   7px 7px 0 rgb(22, 160, 133)
-  ;
+.form{  
+  width: 50%;
+  background: white;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 30px;
+  font-size: 12px;
+  max-width: 500px;
 }
 
-.field>input[type=text],
-.field>button {
-  display:block;
-  font:1.2em 'Montserrat Alternates';
+label.login_field{
+  font-weight: lighter;
+  font-size: 14pt;
+  color: rgb(64, 64, 64);
+  margin-left: 15%;
+  margin-right: 15%;
 }
 
-.field>input[type=text] {
-  flex:1;
-  padding:0.6em;
-  border:0.2em solid rgb(26, 188, 156);
+label.register_field{
+  font-weight: lighter;
+  font-size: 14pt;
+  color: rgb(64, 64, 64);
+  margin-left: 0%;
+  margin-right: 0%;
+  padding-bottom: 1.5%;
+  display:inline-block;
 }
 
-.field>button {
-  padding:0.6em 0.8em;
-  background-color:rgb(26, 188, 156);
-  color: black;
-  border:none;
+label.register_fieldset{
+  font-weight: lighter;
+  font-size: 16pt;
+  color: rgb(36, 36, 36);
+  margin-left: 0%;
+  margin-right: 0%;
 }
 
-.What-is-back{
+label.register_spec{
+  font-weight: lighter;
+  font-size: 11pt;
+  color: rgb(114, 114, 114);
+  margin-left: 0%;
+  margin-right: 0%;
+}
+
+label.login_spec{
+  font-weight: lighter;
+  font-size: 11pt;
+  color: rgb(114, 114, 114);
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+label.register_spec{
+  font-weight: lighter;
+  font-size: 11pt;
+  color: rgb(114, 114, 114);
+  margin-left: 0%;
+  margin-right: 0%;
+  margin-bottom: 5%;
+  display: inline-block;
+}
+
+textarea {
+  font-size: 12px;
+  color: rgb(64, 64, 64);
+}
+
+input {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: lighter;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+input.login {
+  margin-left: 15%;
+  margin-right: 15%;
+  width: 68%;
+  height: 30px;
+}
+
+input.register {
+  margin-left: 0%;
+  margin-right: 0%;
   width: 100%;
-  height: 230%;
-  margin-top: 40%;
-  background-color: rgb(5, 206, 179);
-  position: absolute;
+  height: 25px;  
 }
 
-.What-is-front{
-  width: 90%;
-  height: 90%;
-  margin-top: 3%;
-  margin-bottom: 3%;
-  margin-left: 5%;
-  margin-right: 5%;
-  background-color: rgb(101, 246, 227);
-  position: absolute;
-  border: black 2px solid;
+input.numeric {
+  font-size: 15px;
+  margin-left: 2%;
+  margin-right: 0%;
+  width: 20%;
+  height: 15px;  
 }
 
-.Texto-whatis{
-  text-align: center;
-  position: absolute;
-  margin-top: 2%;
-  margin-left: 5%;
-  color: rgb(0, 0, 0);
-  font-size: 14px;
+select {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  margin-left: 2%;
+  margin-right: 0%;
+  width: 150px;
+  height: 20px;  
 }
 
-.Texto-what{
-  text-align: center;
-  position: absolute;
-  margin-top: 6%;
-  margin-left: 18%;
-  color: rgb(0, 0, 0);
-  font-size: 14px;
+button{
+  color: white;
+  background-color: #2f5597;
+  border: solid #2f5597;
+  font-weight: lighter;
+  font-size: 20px;
+  border-width: 0px;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  padding-left: 4%;
+  padding-right: 4%;   
   
+  cursor: pointer;
 }
 
-.what-is-image {
-  position: absolute;
-  margin-top: 16%;
-  margin-left: 30%;
-  float: left; 
-  width: 450px;
-  height: 250px;
+button.login{
+  margin-top: 5%;
+  margin-left: 15%;
 }
 
-.Vision{
-	text-align: center;
-	margin-top: 42%;
-    margin-left: 2%;
-	background-color: rgb(5, 206, 179);
-	position: absolute;
-	width: 350px;
-	height: 770px;
-	border: black 2px solid;
+button.register{
+  margin-top: 0%;
+  margin-left: 0%;
+  margin-right: 2%;
 }
 
-.titulo-vision{
-	background-color: white;
-	border: black 1px solid;
+button.changelogin {
+  margin-top: 0%;
+  margin-left: 0%;
+  margin-right: 5%;  
+  padding-left: 5%;
+  padding-right: 5%;  
+  background-color: #777676;
+  border: solid #777676;
+  border-width: 0px;
 }
 
-.Mission{
-	text-align: center;
-	margin-top: 42%;
-    margin-left: 36%;
-	background-color: rgb(5, 206, 179);
-	position: absolute;	
-	width: 350px;
-	height: 770px;
-	border: black 2px solid;
-}
-
-.titulo-mission{
-	background-color: white;
-	border: black 1px solid;
-}
-
-.Values{
-	text-align: center;
-	margin-top: 42%;
-    margin-left: 69%;
-	background-color: rgb(5, 206, 179);
-	position: absolute;
-	width: 350px;
-	height: 770px;	
-	border: black 2px solid;
-}
-
-.titulo-values{
-	background-color: white;
-	border: black 1px solid;
-}
-
-
-/* Aqui termina CSS de Main Screen*/

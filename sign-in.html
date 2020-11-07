@@ -2,42 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
-
+	<title>BitTutor - Login</title>
+	<script src = "login.js"></script>
     <link rel="stylesheet" href="firstPart-style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="form">
+	<div class="form">
 
-    <div class="title">
-    Sign in
+		<div>
+			<img src="Pictures/introduction.png" class="main" alt="">
+			<h2 >BitTutor | Online Educational Platform</h2>
+			<h1 class="login">Sign in</h1>
+			
+		</div>
+
+		<div>
+			<label for="email" class="login_field">Email<br></label>
+			<input type="email" name="email" id="email" class="login" required><br>
+		</div>
+
+		<div>
+			<label for="password" class="login_field">Password<br></label>
+			<input type="password" name="password" id="password" class="login" required>
+		</div>
+
+		<div>
+			<label class="login_spec">First time? Create an account <a href="register.html">here</a></label>
+			<br><br><label hidden id="error_msg" class="login_field" style="color: darkred;">&#9888; Your username or password was incorrect!</label>
+		</div>
+
+		<div>
+			<button class="login" onclick="authenticateUser()">Let's go</button>
+		</div>
+
 	</div>
-	
-	<div>
-      <label for="fullname">Fullname * </label>
-      <input type="text" size="47" name="fullname" id="fullname" required>
-	  <br></br>
-	  <br></br>
-	</div>
 
-	<div>
-      <label for="email">Email (username) * </label>
-      <input type="text" size="40" name="email" id="email" required>
-	  <br></br>
-	  <br></br>
-	</div>
-
-	<div>
-      <label for="password">Password * </label>
-      <input type="password" size="47" name="password" id="password" placeholder="please enter strong password" required>
-	  <br></br>
-	  <br></br>
-	</div>
-
-	<a href="" class="boton">SIGN IN</a>
-
-</div>
 </body>
 </html>
